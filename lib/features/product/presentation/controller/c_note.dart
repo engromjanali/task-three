@@ -78,6 +78,7 @@ class CNote extends CBase {
       update();
       MNote mNote = await _iNoteRepository.addNote(payload);
       await Future.delayed(Duration(seconds: 2));
+      noteList.insert(0, mNote);
       printer(noteList.length);
     } catch (e) {
       errorPrint(e);
@@ -92,6 +93,10 @@ class CNote extends CBase {
       isLoadingMore = true;
       update();
       MNote mNote = await _iNoteRepository.updateNote(payload);
+      int index = noteList.indexWhere((item) => item.id == 90);
+      if (index != -1) {
+        noteList[index] = mNote;
+      }
     } catch (e) {
       errorPrint(e);
     } finally {
